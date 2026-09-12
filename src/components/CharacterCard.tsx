@@ -36,7 +36,10 @@ export function CharacterCard({
             alt={`Ink caricature of ${character.name}`}
             className="char-portrait"
             onError={(event) => {
-              event.currentTarget.src = withBase(character.fallback)
+              const img = event.currentTarget
+              if (img.dataset.fallbackApplied) return
+              img.dataset.fallbackApplied = 'true'
+              img.src = withBase(character.fallback)
             }}
           />
           <span className="char-wax">{open ? 'shut' : 'open'}</span>
