@@ -6,6 +6,10 @@ function previewOpen() {
   return new URLSearchParams(window.location.search).get('open') === '1'
 }
 
+function withBase(path: string) {
+  return path.startsWith('/') ? import.meta.env.BASE_URL + path.slice(1) : path
+}
+
 export function CharacterCard({
   character,
   featured,
@@ -28,11 +32,11 @@ export function CharacterCard({
       >
         <div className="char-portrait-frame">
           <img
-            src={character.portrait}
+            src={withBase(character.portrait)}
             alt={`Ink caricature of ${character.name}`}
             className="char-portrait"
             onError={(event) => {
-              event.currentTarget.src = character.fallback
+              event.currentTarget.src = withBase(character.fallback)
             }}
           />
           <span className="char-wax">{open ? 'shut' : 'open'}</span>
