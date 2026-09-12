@@ -6,6 +6,7 @@ import type {
   TimelineNode,
   TimelineTag,
 } from '../types'
+import { withBase } from '../lib/assetPath'
 import { QuoteClip } from './QuoteClip'
 
 type JumpFn = (link: TimelineLink) => void
@@ -152,10 +153,13 @@ export function Timeline({
         {subject && (
           <img
             className="timeline-portrait"
-            src={subject.portrait}
+            src={withBase(subject.portrait)}
             alt=""
             onError={(event) => {
-              event.currentTarget.src = subject.fallback
+              const img = event.currentTarget
+              if (img.dataset.fallbackApplied) return
+              img.dataset.fallbackApplied = 'true'
+              img.src = withBase(subject.fallback)
             }}
           />
         )}

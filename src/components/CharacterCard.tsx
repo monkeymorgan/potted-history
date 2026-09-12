@@ -1,13 +1,10 @@
 import { useState } from 'react'
 import type { Character } from '../types'
+import { withBase } from '../lib/assetPath'
 import { QuoteClip } from './QuoteClip'
 
 function previewOpen() {
   return new URLSearchParams(window.location.search).get('open') === '1'
-}
-
-function withBase(path: string) {
-  return path.startsWith('/') ? import.meta.env.BASE_URL + path.slice(1) : path
 }
 
 export function CharacterCard({

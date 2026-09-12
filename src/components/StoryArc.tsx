@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import type { Arc, Character } from '../types'
+import { withBase } from '../lib/assetPath'
 import { QuoteClip } from './QuoteClip'
 
 export function StoryArc({
@@ -63,11 +64,14 @@ export function StoryArc({
                   return (
                     <img
                       key={id}
-                      src={who.portrait}
+                      src={withBase(who.portrait)}
                       alt=""
                       className={who.crop ? `crop-${who.crop}` : undefined}
                       onError={(event) => {
-                        event.currentTarget.src = who.fallback
+                        const img = event.currentTarget
+                        if (img.dataset.fallbackApplied) return
+                        img.dataset.fallbackApplied = 'true'
+                        img.src = withBase(who.fallback)
                       }}
                     />
                   )
